@@ -58,17 +58,21 @@ This manual step is necessary because of a problem in the way the slf4j api bund
 
 Start Eclipse and go to ```Help => Install New Software...``` on the top menu bar. Add the repository ```http://download.eclipse.org/technology/m2e/releases```. The name should appear as ```Maven Integration for Eclipse```. Follow the prompts to install the m2e plugin. Restart Eclipse.
 
-### Step 6 - Import the class project
+### Step 6 - Install git team provider plugin
+
+In Eclipse go to ```Help => Install New Software...```, list all available repositories, choose ```Collaboration => Git team provider```, and follow the prompts to install the plugin.
+
+### Step 7 - Import the class project
 
 In Eclipse, open the Java perspective. Right-click in the project panel (on the left) and choose ```Import...``` Then choose ```Import existing project into workspace```. Navigate to ```~/workspace/point-of-sale``` and import the project.
 
-### Step 7 - Point Eclipse and m2e to the correct version of Java
+### Step 8 - Point Eclipse and m2e to the correct version of Java
 
 In Eclipse, ```Window => Preferences => Java Build Path => Compiler```, set the options to Java 1.7.
 
 In Eclipse, ```[double-check where]```, set the JRE for Maven to use to Java 1.7.
 
-### Step 8 - Verify the build will run from the command line
+### Step 9 - Verify the build will run from the command line
 
 All the supplied unit tests should pass:
 

@@ -39,6 +39,12 @@ popd
 
 echo
 echo '============================================================='
+echo "Installing MongoDB..."
+
+sudo apt-get -y -f install mongodb-server
+
+echo
+echo '============================================================='
 echo "Installing dependencies for $HOME/workspace/point-of-sale/credit-authorization..."
 
 pushd "$HOME/workspace/point-of-sale/credit-authorization"

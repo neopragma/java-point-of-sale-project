@@ -1,10 +1,9 @@
 package pos.testhelpers;
 
-import static pos.utils.Utils.databaseHost;
-import static pos.utils.Utils.databaseName;
+import static pos.common.Utils.databaseHost;
+import static pos.common.Utils.databaseName;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;

@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import pos.IntegrationTest;
 import pos.testhelpers.DatabaseHelper;
+import pos.testhelpers.IntegrationTest;
 
 @Category(IntegrationTest.class)
 public class ProductTest {
@@ -33,7 +33,7 @@ public class ProductTest {
 	
 	@Test(expected=DuplicateSkuException.class)
 	public void it_does_not_save_a_duplicate_sku() throws UnknownHostException, DuplicateSkuException {
-		Product product = Product.newProduct("12345", "Bubble Gum", new BigDecimal("0.85"), true);
+		Product.newProduct("12345", "Bubble Gum", new BigDecimal("0.85"), true);
 	}
 
 }

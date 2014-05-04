@@ -39,6 +39,12 @@ popd
 
 echo
 echo '============================================================='
+echo "Copying project documentation to the desktop..."
+
+cp "Point of Sale Info.html" "$HOME/Desktop"
+
+echo
+echo '============================================================='
 echo "Installing MongoDB..."
 
 sudo apt-get -y -f install mongodb-server

@@ -4,10 +4,11 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import pos.store.RegisterHandler;
+import pos.testhelpers.IntegrationTest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-@Category(pos.testhelpers.IntegrationTest.class)
+@Category(IntegrationTest.class)
 public class ProjectSetupTest {
 	
 	@Test

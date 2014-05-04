@@ -4,38 +4,27 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import org.apache.log4j.Logger;
 
 public class PosManager implements Runnable {
-	
-   Socket csocket;
-   static ServerSocket ssock;
-   public PosManager(Socket csocket) {
-      this.csocket = csocket;
-   }
 
-   public static void main(String args[]) throws Exception {
-      ssock = new ServerSocket(1234);
-      System.out.println("Listening");
-      while (true) {
-         Socket sock = ssock.accept();
-         System.out.println("Connected");
-         new Thread(new RegisterHandler(sock)).start();
-      }
-   }
+	static Logger log;
+   	
+    private static ServerSocket ssock;
+
+    public static void main(String args[]) throws Exception {
+   	    System.setProperty("logfilename", "logs/pos.store.log");
+   	    log = Logger.getLogger("PosManager");
+        ssock = new ServerSocket(1234);
+        System.out.println("Listening");
+        log.info("PosManager listening on port 1234");
+        while (true) {
+            Socket sock = ssock.accept();
+            System.out.println("Connected");
+            new Thread(new RegisterHandler(sock)).start();
+        }
+    }
+    
+    public void run() { }
    
-   public void run() {
-      try {
-         PrintStream pstream = new PrintStream
-         (csocket.getOutputStream());
-         for (int i = 100; i >= 0; i--) {
-            pstream.println(i + 
-            " bottles of beer on the wall");
-         }
-         pstream.close();
-         csocket.close();
-      }
-      catch (IOException e) {
-         System.out.println(e);
-      }
-   }
 }

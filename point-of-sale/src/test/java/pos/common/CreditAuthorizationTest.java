@@ -12,10 +12,11 @@ import pos.common.CardData;
 import pos.common.CustomerName;
 import pos.common.InvalidAccountNumberException;
 import pos.store.RegisterHandler;
+import pos.testhelpers.IntegrationTest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-@Category(pos.testhelpers.IntegrationTest.class)
+@Category(IntegrationTest.class)
 public class CreditAuthorizationTest {
 	
 	@Test

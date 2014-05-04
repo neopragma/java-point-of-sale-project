@@ -3,8 +3,6 @@ package pos.common;
 import java.io.IOException;
 import java.util.Calendar;
 
-import pos.store.Config;
-
 public class Utils {
 	
 	private static Config config = null;

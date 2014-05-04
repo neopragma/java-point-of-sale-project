@@ -14,6 +14,9 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Calendar;
 
+import pos.common.Auth;
+import pos.common.CardData;
+
 import com.google.gson.Gson;
 
 /**

@@ -111,9 +111,59 @@ The walking skeleton represents a minimal set of features that is usable and val
 <p>
 A closely-related idea is the notion of a <a href="http://en.wikipedia.org/wiki/Minimum_viable_product">Minimum Viable Product</a> (MVP). This is a minimal implementation that can be put into production to gauge the response of users. Based on feedback from users, we can tweak the design to meet their needs better. The idea comes from the <a href="http://theleanstartup.com/principles">Lean Startup</a> concept, in which an initial solution is put into the market quickly in order to get feedback from real customers to guide further development of the product.
 </p>
+<h2>User Types and Personas</h2>
 <p>
+<a href="http://www.mountaingoatsoftware.com/agile/user-stories">User Stories</a> generally represent the interaction between a person and an application. They describe an interaction from the point of view of the user.
 </p>
 <p>
+A <em>user type</em> or <em>actor</em> represents a category of user who interacts with the application in particular ways, based on the tasks they need to perform to carry out the responsibilities of their job. Typically, there is a one-to-one correspondence between user types and permissions, or <a href="https://protect.iu.edu/cybersecurity/authn-authz">authorization</a>. 
+</p>
+<p>
+Some User Stories deal with interactions that are the same for everyone who is of the same user type. For example, we might write a User Story that describes an interaction between <em>cashiers</em> and the Point of Sale application like this:
+</p>
+<pre class="code box">
+As a cashier,
+I need to sign in to my register
+So that I can accept payment from customers
+</pre>
+<p>
+It doesn't matter who the cashier is, how they prefer to do their job, or whether they have any physical limitations that affect the way they work; all cashiers sign in in the same way.
+</p>
+<p>
+Other User Stories describe interactions that differ by individual, even if the individuals are all of the same user type. For example, one customer might prefer to pay cash, another might prefer to use a debit card, another might use Food Stamps, and another might pay by redeeming loyalty points.
+</p>
+<p>
+To distinguish individual differences like these, we use <a href="http://www.agilemodeling.com/artifacts/personas.htm">Personas</a>. A persona is a made-up person who has a backstory, a reason to patronize the store, and preferences about how they want to shop and pay for purchases. Personas help us fine-tune our design to ensure a positive <a href="http://www.allaboutux.org/ux-definitions">user experience</a> for the people who will depend on our software.
+</p>
+<p>
+To help make the User Stories meaningful, we have defined several User Types and Personas for the Point of Sale application. The details are documented separately, but here is an overview:
+</p>
+<p>
+<img src="../Pictures/point-of-sale-user-types-and-personas.png" width="1000px"/>
+</p>
+<p>
+So, we might write a User Story for Alexei, another one for Larissa, and another for Lenny:
+</p>
+<p>
+<pre class="code box">
+As Alexei,
+I need the store to accept Food Stamps
+So that I can purchase basic necessities
+</pre>
+</p>
+<p>
+<pre class="code box">
+As Larissa,
+I need the store to keep plenty of candy in stock
+So that I can buy candy on the way home from school every day
+</pre>
+</p>
+<p>
+<pre class="code box">
+As Lenny,
+I need someone to approve alcohol sales
+So that I can buy booze when Dan is working the register
+</pre>
 </p>
 <p>
 </p>

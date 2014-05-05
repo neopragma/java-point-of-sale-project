@@ -46,6 +46,7 @@ cp point-of-sale-context-diagram.png "$HOME/Pictures"
 cp point-of-sale-story-map.png "$HOME/Pictures"
 cp point-of-sale-use-case-diagram.png "$HOME/Pictures"
 cp point-of-sale-walking-skeleton.png "$HOME/Pictures"
+cp point-of-sale-user-types-and-personas.png "$HOME/Pictures"
 
 echo
 echo '============================================================='

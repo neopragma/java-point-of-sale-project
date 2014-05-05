@@ -22,7 +22,7 @@ git clone https://github.com/neopragma/java-point-of-sale-project
 Run the setup script.
 
 ```shell
-cd ~/provision-point-of-sale-vm
+cd ~/java-point-of-sale-project
 ./setup
 ```
 

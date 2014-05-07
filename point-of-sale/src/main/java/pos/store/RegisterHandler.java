@@ -14,6 +14,8 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.Calendar;
 
+import org.apache.log4j.Logger;
+
 import pos.common.Auth;
 import pos.common.CardData;
 
@@ -29,7 +31,11 @@ import com.google.gson.Gson;
 public class RegisterHandler implements Runnable {
 
 	private Socket sock;
-	private static final String SEPARATOR = "/";
+    private PrintStream output;
+    private InputStream input;
+    private static final String SEPARATOR = "/";
+	private static Logger log;
+	private boolean running;
 	
 	public RegisterHandler(Socket sock) {
 		this.sock = sock;
@@ -84,24 +90,37 @@ public class RegisterHandler implements Runnable {
 
 	@Override
 	public void run() {
-      try {
-    	  System.out.println("RegisterHandler.run");
-    	  byte[] buffer = new byte[4096];
-    	  InputStream input = new BufferedInputStream(sock.getInputStream());
-          input.read(buffer);
-          String received = new String(buffer);
-          System.out.println("RegisterHandler received: " + received);
-    	  PrintStream output = new PrintStream(sock.getOutputStream());
-    	  System.out.println("RegisterHandler echoing: " + received);
-          output.println(received);
-          System.out.println("RegisterHandler sending close command");
-          output.println("close");
-//          output.close();
-//          sock.close();
-       }
-       catch (IOException e) {
-          System.out.println(e);
-       }
+        try {
+		    running = true;
+   	        log = Logger.getLogger("RegisterHandler");		
+	        output = new PrintStream(sock.getOutputStream());
+	        input = new BufferedInputStream(sock.getInputStream());
+            while(running) {
+    		    byte[] buffer = new byte[4096];
+			    input.read(buffer);
+    			String received = new String(buffer).trim();
+    			if (received.length() > 0) {
+			        log.info("RegisterHandler received: " + received);
+			        if (received.equals("close")) {
+			            close();
+			            return;
+			        }
+			        log.info("RegisterHandler echoing: " + received);
+                    output.println(received);
+    			}
+            }
+        } catch (IOException e) {
+		    log.info("IOException: " + e.getMessage());
+		    e.printStackTrace();
+	    }
+	}
+	
+	private void close() throws IOException {
+		log.info("RegisterHandler is closing.");
+		running = false;
+		output.println("close");
+        output.close();
+        sock.close();
 	}
         
 }

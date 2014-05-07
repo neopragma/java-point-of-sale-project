@@ -37,6 +37,11 @@ public class Utils {
 			"Timeout for connecting to the POS store application must be defined in pos.properties, e.g. " +
 	               POS_CONNECTION_TIMEOUT_MILLIS_KEY + " 3000";
 
+	private static final String LOGGER_NAME_KEY = "logger.name";
+	private static final String LOGGER_NAME_MESSAGE = 
+		    "Logger name must be defined in pos.properties, e.g. " + 
+		    		LOGGER_NAME_KEY + " = PosManager";
+
 	private static final String noFileMessage = "Unable to read pos.properties file.";
 
 	private static TimeSource timeSource = null;
@@ -59,6 +64,10 @@ public class Utils {
 	
     public static int posPort() {
    		return Integer.parseInt(get(POS_PORT_KEY, POS_PORT_MESSAGE));
+    }
+	
+    public static String loggerName() {
+   		return get(LOGGER_NAME_KEY, LOGGER_NAME_MESSAGE);
     }
     
     public static int posConnectionTimeoutMillis() {

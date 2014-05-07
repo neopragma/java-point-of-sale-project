@@ -1,30 +1,45 @@
 package pos.store;
 
-import java.io.IOException;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.MessageFormat;
+import java.util.Locale;
+
 import org.apache.log4j.Logger;
 
-public class PosManager implements Runnable {
+import pos.common.Messages;
+import static pos.common.Utils.loggerName;
+import static pos.common.Utils.posPort;
 
-	static Logger log;
-   	
-    private static ServerSocket ssock;
+public class PosManager {
 
-    public static void main(String args[]) throws Exception {
-   	    System.setProperty("logfilename", "logs/pos.store.log");
-   	    log = Logger.getLogger("PosManager");
-        ssock = new ServerSocket(1234);
-        System.out.println("Listening");
-        log.info("PosManager listening on port 1234");
+	private static Logger log;
+    private ServerSocket ssock;
+    private Messages messages = null;
+    
+    void run() throws Exception {
+   	    log = Logger.getLogger(loggerName());
+        ssock = new ServerSocket(posPort());
+//        messages().setLocale(Locale.FRANCE);
+        log.info(MessageFormat.format(messages().message("listening"), String.valueOf(posPort())));
         while (true) {
             Socket sock = ssock.accept();
-            System.out.println("Connected");
+            log.info("connection accepted");
             new Thread(new RegisterHandler(sock)).start();
         }
     }
     
-    public void run() { }
+    private Messages messages() {
+    	if (messages == null) {
+    		messages = new Messages();
+    	}
+    	return messages;
+    }
+
+    public static void main(String args[]) throws Exception {
+    	PosManager pos = new PosManager();
+    	pos.run();
+    	System.exit(0);
+    }
    
 }

@@ -6,6 +6,9 @@ import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+
+import org.apache.log4j.Logger;
+
 import static pos.common.Utils.posHost;
 import static pos.common.Utils.posPort;
 import static pos.common.Utils.posConnectionTimeoutMillis;
@@ -18,45 +21,51 @@ public class Register {
 	private byte[] buffer;
 	private boolean running;
 	private String registerIdentifier;
+	private static Logger log;
 	
 	public Register(String registerIdentifier) {
 		this.registerIdentifier = registerIdentifier;
 	}
 	
 	public void init() throws UnknownHostException, IOException {
+//	    log = Logger.getLogger("Register");		
 		posManagerSocket = new Socket();
 		posManagerSocket.connect(
 			new InetSocketAddress(posHost(), posPort()), posConnectionTimeoutMillis());		
 		toPosManager = new PrintStream(posManagerSocket.getOutputStream());
-		
-		System.out.println("Register " + registerIdentifier + " sending init message to PosManager");
-		toPosManager.println("init " + registerIdentifier);
+	    fromPosManager = posManagerSocket.getInputStream();
+		toPosManager.println("initregister " + registerIdentifier);
+		toPosManager.flush();
 		running = true;
 		run();
 	}
 	
 	public void run() throws IOException {
-		System.out.println("Register " + registerIdentifier + " in run() method");
 		while (running) {
-			buffer = new byte[4096];
-			fromPosManager = posManagerSocket.getInputStream();
+		    buffer = new byte[4096];
 			fromPosManager.read(buffer);
-			processMessageFromPosManager(new String(buffer));
+			String received = new String(buffer);
+			if (received.trim().length() > 0) {
+			    processMessageFromPosManager(new String(buffer));
+			}
 		}
 	}
 
 	private void processMessageFromPosManager(String message) throws IOException {
 		System.out.println("Register " + registerIdentifier + " received: " + message);
 		if (message.equals("close")) {
-			System.out.println("Register " + registerIdentifier + " closing");
 			close();
 			running = false;
-		}			
+		}
 	}
 	
 	private void close() throws IOException {
-		System.out.println("Register " + registerIdentifier + " is closing.");
+//		log.info("Register " + registerIdentifier + " is closing.");
+		toPosManager.println("close");
+		toPosManager.flush();
+		// need ack from server here before closing socket
 		posManagerSocket.close();
+		System.exit(0);
 	}
 	
 	public static void main(String[] args) throws UnknownHostException, IOException {

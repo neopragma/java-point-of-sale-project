@@ -1,4 +1,4 @@
-package pos.utils;
+package pos.common;
 
 public interface TimeSource {
 

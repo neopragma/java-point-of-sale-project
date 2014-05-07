@@ -1,4 +1,4 @@
-package pos;
+package pos.store;
 
 /**
  * Driver for the retail Point of Sale system.

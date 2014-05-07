@@ -1,4 +1,4 @@
-package pos;
+package pos.common;
 
 public class AccountNumber {
 	

@@ -39,6 +39,23 @@ popd
 
 echo
 echo '============================================================='
+echo "Copying project documentation to the desktop..."
+
+cp "Point of Sale Info.html" "$HOME/Desktop"
+cp point-of-sale-context-diagram.png "$HOME/Pictures"
+cp point-of-sale-story-map.png "$HOME/Pictures"
+cp point-of-sale-use-case-diagram.png "$HOME/Pictures"
+cp point-of-sale-walking-skeleton.png "$HOME/Pictures"
+cp point-of-sale-user-types-and-personas.png "$HOME/Pictures"
+
+echo
+echo '============================================================='
+echo "Installing MongoDB..."
+
+sudo apt-get -y -f install mongodb-server
+
+echo
+echo '============================================================='
 echo "Installing dependencies for $HOME/workspace/point-of-sale/credit-authorization..."
 
 pushd "$HOME/workspace/point-of-sale/credit-authorization"
@@ -50,6 +67,7 @@ echo '============================================================='
 echo "Installing dependencies for $HOME/workspace/point-of-sale/point-of-sale..."
 
 pushd "$HOME/workspace/point-of-sale"
+mvn eclipse:eclipse
 mvn clean install
 popd
 

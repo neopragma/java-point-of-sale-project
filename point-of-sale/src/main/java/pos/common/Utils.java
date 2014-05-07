@@ -1,8 +1,7 @@
-package pos.utils;
+package pos.common;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.Properties;
 
 public class Utils {
 	
@@ -23,6 +22,21 @@ public class Utils {
 	    "Authorization service endpoint must be defined in pos.properties, e.g. " + 
 		AUTH_ENDPOINT_KEY + " = https://something/";
 
+	private static final String POS_HOST_KEY = "pos.host";
+	private static final String POS_HOST_MESSAGE = 
+		    "Point of Sale store host must be defined in pos.properties, e.g. " + 
+		    		POS_HOST_KEY + " = localhost";
+
+	private static final String POS_PORT_KEY = "pos.port";
+	private static final String POS_PORT_MESSAGE = 
+		    "Point of Sale store port must be defined in pos.properties, e.g. " + 
+		    		POS_PORT_KEY + " = 1234";
+
+	private static final String POS_CONNECTION_TIMEOUT_MILLIS_KEY = "pos.connection.timeout.millis";
+	private static final String POS_CONNECTION_TIMEOUT_MILLIS_MESSAGE =
+			"Timeout for connecting to the POS store application must be defined in pos.properties, e.g. " +
+	               POS_CONNECTION_TIMEOUT_MILLIS_KEY + " 3000";
+
 	private static final String noFileMessage = "Unable to read pos.properties file.";
 
 	private static TimeSource timeSource = null;
@@ -37,6 +51,18 @@ public class Utils {
 	
     public static String authEndpoint() {
    		return get(AUTH_ENDPOINT_KEY, AUTH_ENDPOINT_MESSAGE);
+    }
+	
+    public static String posHost() {
+   		return get(POS_HOST_KEY, POS_HOST_MESSAGE);
+    }
+	
+    public static int posPort() {
+   		return Integer.parseInt(get(POS_PORT_KEY, POS_PORT_MESSAGE));
+    }
+    
+    public static int posConnectionTimeoutMillis() {
+    	return Integer.parseInt(get(POS_CONNECTION_TIMEOUT_MILLIS_KEY, POS_CONNECTION_TIMEOUT_MILLIS_MESSAGE));
     }
     
     public static String get(String key, String notFoundMessage) {

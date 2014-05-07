@@ -28,3 +28,7 @@ local.properties
 # PDT-specific
 .buildpath
 
+# Temporary files produced by text editors
+
+*~
+

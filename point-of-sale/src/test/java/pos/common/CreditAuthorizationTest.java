@@ -1,4 +1,4 @@
-package pos;
+package pos.common;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -6,10 +6,17 @@ import java.util.Date;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import pos.common.AccountNumber;
+import pos.common.Auth;
+import pos.common.CardData;
+import pos.common.CustomerName;
+import pos.common.InvalidAccountNumberException;
+import pos.store.RegisterHandler;
+import pos.testhelpers.IntegrationTest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 
-@Category(pos.IntegrationTest.class)
+@Category(IntegrationTest.class)
 public class CreditAuthorizationTest {
 	
 	@Test

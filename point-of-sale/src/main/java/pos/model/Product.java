@@ -1,8 +1,9 @@
 package pos.model;
 
 import java.math.BigDecimal;
-import static pos.utils.Utils.databaseHost;
-import static pos.utils.Utils.databaseName;
+
+import static pos.common.Utils.databaseHost;
+import static pos.common.Utils.databaseName;
 
 import java.net.UnknownHostException;
 

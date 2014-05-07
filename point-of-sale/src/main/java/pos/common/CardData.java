@@ -1,4 +1,4 @@
-package pos;
+package pos.common;
 
 import java.util.Date;
 

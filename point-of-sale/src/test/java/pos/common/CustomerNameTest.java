@@ -1,8 +1,10 @@
-package pos;
+package pos.common;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import pos.common.CustomerName;
+import pos.testhelpers.UnitTest;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 

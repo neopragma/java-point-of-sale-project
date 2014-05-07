@@ -1,7 +1,7 @@
-package pos;
+package pos.store;
 
-import static pos.utils.Utils.authEndpoint;
-import static pos.utils.Utils.today;
+import static pos.common.Utils.authEndpoint;
+import static pos.common.Utils.today;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -13,6 +13,9 @@ import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
 import java.util.Calendar;
+
+import pos.common.Auth;
+import pos.common.CardData;
 
 import com.google.gson.Gson;
 
@@ -87,9 +90,12 @@ public class RegisterHandler implements Runnable {
     	  InputStream input = new BufferedInputStream(sock.getInputStream());
           input.read(buffer);
           String received = new String(buffer);
-          System.out.println("read: " + received);
+          System.out.println("RegisterHandler received: " + received);
     	  PrintStream output = new PrintStream(sock.getOutputStream());
+    	  System.out.println("RegisterHandler echoing: " + received);
           output.println(received);
+          System.out.println("RegisterHandler sending close command");
+          output.println("close");
 //          output.close();
 //          sock.close();
        }

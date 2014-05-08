@@ -1,15 +1,20 @@
 package pos.model;
 
-import java.math.BigDecimal;
-
 import static pos.common.Utils.databaseHost;
 import static pos.common.Utils.databaseName;
 
+import java.math.BigDecimal;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.bson.types.ObjectId;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
@@ -28,12 +33,14 @@ public class Product extends BasicDBObject{
 	private static final String UNIT_PRICE = "unit_price";
 	private static final String TAXABLE = "taxable";
 
+	ObjectId id;
 	String sku;
 	String description;
 	BigDecimal unitPrice;
 	Boolean taxable;
 	
-	public Product(String sku, String description, BigDecimal unitPrice, Boolean taxable) {
+	public Product(ObjectId id, String sku, String description, BigDecimal unitPrice, Boolean taxable) {
+		this.id = id;
 		this.sku = sku;
 		this.description = description;
 		this.unitPrice = unitPrice;
@@ -41,7 +48,7 @@ public class Product extends BasicDBObject{
 	}
 	
 	public static Product newProduct(String sku, String description, BigDecimal unitPrice, Boolean taxable) throws UnknownHostException, DuplicateSkuException {
-		Product product = new Product(sku, description, unitPrice, taxable);
+		Product product = new Product(null, sku, description, unitPrice, taxable);
 		if (exists(sku)) {
 			throw new DuplicateSkuException();
 		}
@@ -51,6 +58,10 @@ public class Product extends BasicDBObject{
 		product.put(TAXABLE, taxable);
 		collection().insert(product);
 		return product;
+	}
+	
+	public ObjectId getId() {
+		return id;
 	}
 	
 	public String getSku() {
@@ -91,6 +102,23 @@ public class Product extends BasicDBObject{
 		DBObject returnFields = new BasicDBObject();
 		returnFields.put(ID, 1 );
 		return collection().findOne(searchBy, returnFields) != null;
+	}
+	
+	public static List<Product> findAll() throws UnknownHostException {
+		List<Product> products = new ArrayList<Product>();
+		DBCollection documents = collection();
+		DBCursor cursor = documents.find();
+		for (Iterator<DBObject> iter = cursor.iterator() ; iter.hasNext() ; ) {
+			DBObject dbObject = iter.next();
+			Product product = new Product(
+				(ObjectId) dbObject.get(ID),
+				(String) dbObject.get(SKU),
+				(String) dbObject.get(DESCRIPTION),
+				new BigDecimal((String) dbObject.get(UNIT_PRICE)),
+				new Boolean((Boolean) dbObject.get(TAXABLE)));
+			products.add(product);
+		}
+		return products;
 	}
 
 	private static DBCollection collection() throws UnknownHostException {

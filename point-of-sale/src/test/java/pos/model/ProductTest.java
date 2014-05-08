@@ -35,5 +35,10 @@ public class ProductTest {
 	public void it_does_not_save_a_duplicate_sku() throws UnknownHostException, DuplicateSkuException {
 		Product.newProduct("12345", "Bubble Gum", new BigDecimal("0.85"), true);
 	}
+	
+	@Test
+	public void it_returns_the_complete_list_of_products() throws Exception {
+		Product.findAll();
+	}
 
 }

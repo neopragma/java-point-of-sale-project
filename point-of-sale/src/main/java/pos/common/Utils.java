@@ -1,11 +1,18 @@
 package pos.common;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Calendar;
+import java.util.Locale;
+
+import org.apache.log4j.Logger;
 
 public class Utils {
 	
 	private static Config config = null;
+	private static Logger logger = null;
+    private static Messages messages = null;
+	private static String DEFAULT_LOCALE = "en_US";
 
 	private static final String DATABASE_HOST_KEY = "database.host";
 	private static final String DATABASE_HOST_MESSAGE = 
@@ -42,6 +49,9 @@ public class Utils {
 		    "Logger name must be defined in pos.properties, e.g. " + 
 		    		LOGGER_NAME_KEY + " = PosManager";
 
+	private static final String LOCALE_KEY = "locale";
+	private static final String LOCALE_MESSAGE = "using locale ";
+
 	private static final String noFileMessage = "Unable to read pos.properties file.";
 
 	private static TimeSource timeSource = null;
@@ -73,6 +83,14 @@ public class Utils {
     public static int posConnectionTimeoutMillis() {
     	return Integer.parseInt(get(POS_CONNECTION_TIMEOUT_MILLIS_KEY, POS_CONNECTION_TIMEOUT_MILLIS_MESSAGE));
     }
+	
+    public static Locale locale() throws IOException {
+    	String languageTag = config().get(LOCALE_KEY);
+    	if (languageTag == null) {
+    		languageTag = DEFAULT_LOCALE;
+    	}
+   		return Locale.forLanguageTag(languageTag);
+    }
     
     public static String get(String key, String notFoundMessage) {
     	try {
@@ -95,6 +113,32 @@ public class Utils {
         
     public static void setConfig(Config newConfig) {
     	config = newConfig;
+    }
+
+    public static void log(String messageKey) throws IOException {
+    	log(messageKey, new Object[] { });
+    }
+    
+    public static void log(String messageKey, Object...args) throws IOException {
+        logger().info(MessageFormat.format(messages().message(messageKey), args));
+    }
+    
+    public static String message(String messageKey, Object...args) throws IOException {
+    	return MessageFormat.format(messages().message(messageKey), args);
+    }
+    
+    private static Logger logger() {
+    	if (logger == null) {
+    		logger = Logger.getLogger(loggerName());
+    	}
+   	    return logger;
+    }
+    
+    private static Messages messages() throws IOException {
+    	if (messages == null) {
+    		messages = new Messages();
+    	}
+    	return messages;
     }
     
     public static Calendar today() {

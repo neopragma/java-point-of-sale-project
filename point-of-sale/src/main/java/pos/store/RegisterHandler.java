@@ -1,6 +1,7 @@
 package pos.store;
 
 import static pos.common.Utils.authEndpoint;
+import static pos.common.Utils.log;
 import static pos.common.Utils.today;
 
 import java.io.BufferedInputStream;
@@ -46,7 +47,7 @@ public class RegisterHandler implements Runnable {
         HttpURLConnection request = (HttpURLConnection)endpointURL.openConnection();
         request.setRequestMethod("GET");
         request.connect();
-        java.io.BufferedReader rd  = new java.io.BufferedReader(new java.io.InputStreamReader(request.getInputStream()));
+        BufferedReader rd  = new BufferedReader(new InputStreamReader(request.getInputStream()));
         StringBuilder response = new StringBuilder();
         String line = null;
         while ((line = rd.readLine()) != null){
@@ -92,7 +93,6 @@ public class RegisterHandler implements Runnable {
 	public void run() {
         try {
 		    running = true;
-   	        log = Logger.getLogger("RegisterHandler");		
 	        output = new PrintStream(sock.getOutputStream());
 	        input = new BufferedInputStream(sock.getInputStream());
             while(running) {
@@ -100,12 +100,12 @@ public class RegisterHandler implements Runnable {
 			    input.read(buffer);
     			String received = new String(buffer).trim();
     			if (received.length() > 0) {
-			        log.info("RegisterHandler received: " + received);
+			        log("received", this.getClass().getSimpleName(), received);
 			        if (received.equals("close")) {
 			            close();
 			            return;
 			        }
-			        log.info("RegisterHandler echoing: " + received);
+			        log("sending", getClass().getSimpleName(), received);
                     output.println(received);
     			}
             }
@@ -116,7 +116,7 @@ public class RegisterHandler implements Runnable {
 	}
 	
 	private void close() throws IOException {
-		log.info("RegisterHandler is closing.");
+		log("closing", getClass().getSimpleName());
 		running = false;
 		output.println("close");
         output.close();

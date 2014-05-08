@@ -1,5 +1,6 @@
 package pos.common;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -7,14 +8,13 @@ public class Messages {
 
 	private static final String BASE_NAME = "messages";
 	private ResourceBundle bundle = null;
-	private Locale locale = Locale.getDefault();
+	public Locale locale = Utils.locale();
+	
+	public Messages() throws IOException { }
 	
 	public String message(String key) {
+		Locale.setDefault(locale);
 		return bundle().getString(key);
-	}
-	
-	public void setLocale(Locale locale) {
-		this.locale = locale;
 	}
 	
 	public void setBundle(ResourceBundle bundle) {

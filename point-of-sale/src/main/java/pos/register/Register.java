@@ -1,5 +1,11 @@
 package pos.register;
 
+import static pos.common.Utils.log;
+import static pos.common.Utils.message;
+import static pos.common.Utils.posConnectionTimeoutMillis;
+import static pos.common.Utils.posHost;
+import static pos.common.Utils.posPort;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -7,11 +13,9 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import org.apache.log4j.Logger;
-
-import static pos.common.Utils.posHost;
-import static pos.common.Utils.posPort;
-import static pos.common.Utils.posConnectionTimeoutMillis;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class Register {
 	
@@ -21,23 +25,50 @@ public class Register {
 	private byte[] buffer;
 	private boolean running;
 	private String registerIdentifier;
-	private static Logger log;
 	
 	public Register(String registerIdentifier) {
 		this.registerIdentifier = registerIdentifier;
 	}
 	
 	public void init() throws UnknownHostException, IOException {
-//	    log = Logger.getLogger("Register");		
+		createAndShowGUI();
+		run();
+	}
+	
+	private void createAndShowGUI() throws UnknownHostException, IOException {
+        JFrame frame = new JFrame("HelloWorldSwing");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        frame.getContentPane().add(statusPanel());
+        frame.pack();
+        frame.setVisible(true);
+        
+        // this will be done in response to user input
+        connectToStoreSystem();
+    }
+	
+	private JPanel statusPanel() throws IOException {
+        JPanel panel = new JPanel();
+        JLabel statusLabel = new JLabel(message("register.status", registerIdentifier, message("closed")));
+        panel.add(statusLabel);
+		return panel;
+	}
+	
+	private void connectToStoreSystem() throws UnknownHostException, IOException {
 		posManagerSocket = new Socket();
-		posManagerSocket.connect(
-			new InetSocketAddress(posHost(), posPort()), posConnectionTimeoutMillis());		
+		log("attempting.connection", registerIdentifier);
+		try {
+			posManagerSocket.connect(
+				new InetSocketAddress(posHost(), posPort()), posConnectionTimeoutMillis());
+		} catch (Exception e) {
+            log("unable.to.connect", registerIdentifier);
+            return;
+		}		
 		toPosManager = new PrintStream(posManagerSocket.getOutputStream());
 	    fromPosManager = posManagerSocket.getInputStream();
-		toPosManager.println("initregister " + registerIdentifier);
+		toPosManager.println("init " + registerIdentifier);
 		toPosManager.flush();
-		running = true;
-		run();
+		running = true;		
 	}
 	
 	public void run() throws IOException {
@@ -52,7 +83,6 @@ public class Register {
 	}
 
 	private void processMessageFromPosManager(String message) throws IOException {
-		System.out.println("Register " + registerIdentifier + " received: " + message);
 		if (message.equals("close")) {
 			close();
 			running = false;
@@ -60,10 +90,10 @@ public class Register {
 	}
 	
 	private void close() throws IOException {
-//		log.info("Register " + registerIdentifier + " is closing.");
+		log("closing", registerIdentifier);
 		toPosManager.println("close");
 		toPosManager.flush();
-		// need ack from server here before closing socket
+		//TODO need ack from server here before closing socket
 		posManagerSocket.close();
 		System.exit(0);
 	}

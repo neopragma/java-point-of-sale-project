@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Point of Sale Project Cheatsheet</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/default.css"/>
+</head>
+<body>
+<a href="index.html">Top</a>
+<h1>Point of Sale Project Cheatsheet</h1>
+
+<h3>Contents</h3>
+<p>
+<ul>
+<li><a href="#authserver">Credit Authorization server</a></li>
+<li><a href="#database">Database</a></li>
+<li><a href="#building">Building the Point of Sale application</a></li>
+<li><a href="#running">Running the Point of Sale application</a></li>
+<li><a href="#logfiles">Log files</a></li>
+</ul>
+</p>
+
+<a name="authserver"/>
+<h3>Credit Authorization server</h3>
+<p>
+The Point of Sale application makes RESTful calls to an external Credit Authorization server. It is a fake server designed to simulate the case when the application you are working on has dependencies on external services. It handles authorization requests as follows:
+</p>
+<ul>
+<li>Account numbers that begin with a number higher than 4 are denied as &quot;invalid&quot; accounts.</li>
+<li>Requests for amounts above $1,200 are denied as &quot;over the credit limit&quot;.</li>
+</ul>
+<p>
+The server runs locally and lives at <span class="code">~/workspace/point-of-sale/credit-authorization</span>. The Point of Sale application you will be enhancing expects the server to be available. A script in <span class="code">~/bin</span> starts and stops the server:
+</p>
+<p>Start credit authorization server</p>
+<p>
+<pre class="code box">
+authserver start
+</pre>
+</p>
+
+<p>Stop credit authorization server</p>
+<p>
+<pre class="code box">
+authserver stop
+</pre>
+</p>
+
+<p>Restart credit authorization server</p>
+<p>
+<pre class="code box">
+authserver restart
+</pre>
+</p>
+
+<a name="database"/>
+<h3>Database</h3>
+<p>
+The Point of Sale application uses a MongoDB database. The following collections are predefined for you:
+</p>
+<p>
+<ul>
+<li>Products &mdash; The products available for sale in the store.</li>
+<li>Employees &mdash; Store employees who have various duties and functions to perform via the Point of Sale application.</li>
+</ul>
+</p>
+<p>
+The database files are located at <span class="code">/var/lib/mongodb</span>. The test database is named <span class="code">pos_test</span>. The production database is named <span class="code">pos_prod</span>.
+</p>
+<p>
+When the class environment is first configured, you will have to start the MongoDB daemon manually. Thereafter, it should start automatically when you boot the VM.
+</p>
+<p>
+To start the MongoDB daemon:
+</p>
+<p>
+<pre class="code box">
+mongod
+</pre>
+</p>
+<p>Load test data:</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mongo test_data.js
+</pre>
+</p>
+<p>Load production data:</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mongo prod_data.js
+</pre>
+</p>
+<p>
+As you work, you can change the contents of the <span class="code">*_data.js</span> files to create additional data and/or change the key/value pairs stored in the database to support your emerging solution design.
+</p>
+
+<a name="building"/>
+<h3>Building the application</h3>
+<p>
+The development environment is configured with Maven and Eclipse. Use Maven to build the Point of Sale application. Within Eclipse, right-click the <span class="code">pom.xml</span> file in Package Explorer, choose <span class="code">Run As...</span> from the context menu, and choose one of the Maven run configurations. On the command line, navigate to the project root directory <span class="code">~/workspace/point-of-sale</span> and run <span class="code">mvn</span>. Here are a few useful commands:
+</p>
+<p>
+<pre class="code box">
+mvn clean                            clear out the target directory
+mvn install                          download and install dependencies
+mvn compile                          compile Java sources
+mvn test                             compile and run unit tests
+mvn failsafe:integration-test        compile and run integration tests
+mvn checkstyle:checkstyle            generate Checkstyle report
+mvn sonar:sonar                      generate static code analysis reports
+mvn package -Pstore                  create Store application executable jar 
+mvn package -Pregister               create Register application executable jar
+mvn package -Pstore,register         create both executable jars
+</pre>
+</p>
+
+<a name="running"/>
+<h3>Running the application</h3>
+<p>
+<ol>
+<li>Ensure the MongoDB daemon is running
+<pre class="code box">
+ps -e | grep mongodb
+</pre>
+</li>
+<li>Start the Credit Authorization server
+<pre class="code box">
+authserver start
+</pre>
+</li>
+<li>Start the POS Store application
+<pre class="code box">
+store start
+</pre>
+</li>
+<li>Start one or more POS Register instances
+<pre class="code box">
+register 1
+register 2
+register 3
+</pre>
+</li>
+</ol>
+</p>
+<p>
+The Point of Sale application has two components: Store and Register. The Store application is a multithreaded server that interacts with one or more Registers. The Register application is a Swing GUI application that lets you simulate the functions of a point of sale register system, such as reading cards, registering sales, generating receipts, and managing the cash drawer. 
+</p>
+<p>
+Start the Store application before starting any instances of Register. You can run more than one Register instance at the same time. Scripts to start and stop the Store server and to start Register instances are installed in <span class="code">~/bin</span>. 
+</p>
+<p>
+The <span class="code">store</span> and <span class="code">register</span> scripts execute the jars that are produced by the <span class="code">mvn package</span> command. If you have not yet generated the jars, the scripts will not work. During development, run the Store application in Eclipse by right-clicking the <span class="code">pos.store.PosManager</span> class and choosing <span class="code">Run As...Java Application</span>. Then, start Register instances by running <span class="code">pos.register.Register</span>, also as a Java Application. 
+</p>
+
+<a name="logfiles"/>
+<h3>Log files</h3>
+<p>
+TBD
+</p>
+
+</body></html>

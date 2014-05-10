@@ -27,6 +27,10 @@ mkdir -p "$HOME/bin"
 mkdir -p "$HOME/tmp"
 cp authserver "$HOME/bin"
 chmod +x "$HOME/bin/authserver"
+cp store "$HOME/bin"
+chmod +x "$HOME/bin/store"
+cp register "$HOME/bin"
+chmod +x "$HOME/bin/register"
 
 echo
 echo '============================================================='
@@ -41,13 +45,7 @@ echo
 echo '============================================================='
 echo "Copying project documentation to the desktop..."
 
-cp "Point of Sale Info.html" "$HOME/Desktop"
-cp "Point of Sale Cheatsheet.html" "$HOME/Desktop"
-cp point-of-sale-context-diagram.png "$HOME/Pictures"
-cp point-of-sale-story-map.png "$HOME/Pictures"
-cp point-of-sale-use-case-diagram.png "$HOME/Pictures"
-cp point-of-sale-walking-skeleton.png "$HOME/Pictures"
-cp point-of-sale-user-types-and-personas.png "$HOME/Pictures"
+cp -R Point-of-Sale-Docs "$HOME/Desktop"
 
 echo
 echo '============================================================='

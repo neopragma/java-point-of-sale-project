@@ -1,0 +1,40 @@
+#!/bin/bash
+#============================================================
+# Start the point of sale Register application
+#
+# 10 May 2014 v 1.0
+#============================================================
+APPDIR="$HOME/workspace/point-of-sale/target"
+
+TEMP=`getopt -o hv --long help,version \
+             -n 'register' -- "$@"`
+
+if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+eval set -- "$TEMP"
+
+function version {
+  echo 'register start script version 1.0 10 May 2014'
+}
+
+function help {
+  echo 'Stop a POS Register'
+  echo '  register -h          Usage help'
+  echo '  register --help      Usage help'
+  echo '  register [number]    Start register [number]'
+}
+
+while true; do
+  case "$1" in
+    -h | --help ) help ; exit 0 ;;
+    -v | --version ) version ; exit 0 ;;
+    * ) shift ; break ;;
+  esac
+done
+
+if [ -z "$1" ]; then 
+    echo "First command line argument must be the register number"
+    exit 1
+fi
+
+java -jar "$APPDIR/pos-register.jar" "$1" &
+exit 0

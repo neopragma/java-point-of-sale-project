@@ -1,0 +1,11 @@
+.box {
+    border: 1px dashed black;
+    background-color: #eee;
+    padding: 4px;
+}
+.code {
+    font-family: Courier New, monospaced;
+    font-size: 95%;
+    font-weight: bold;
+}
+

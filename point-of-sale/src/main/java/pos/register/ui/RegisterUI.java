@@ -5,11 +5,9 @@ import static pos.common.Utils.message;
 import java.io.IOException;
 import java.net.UnknownHostException;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import pos.register.Register;
 
@@ -20,10 +18,8 @@ import pos.register.Register;
  */
 public class RegisterUI {
 	
-	String cashierDisplayName = null;
-	Border raisedBevel = BorderFactory.createRaisedBevelBorder();
-	Border loweredBevel = BorderFactory.createLoweredBevelBorder();
-	Border compoundBorder = BorderFactory.createCompoundBorder(raisedBevel, loweredBevel);
+	private SaleDetailPanel saleDetailPanel;
+	private ProductSelectionPanel productSelectionPanel;
 	
 	public void init(Register register) throws UnknownHostException, IOException {
         JFrame frame = new JFrame(message("pos.register"));
@@ -32,13 +28,19 @@ public class RegisterUI {
         rootPanel.setLayout(new BoxLayout(rootPanel, BoxLayout.Y_AXIS));
         rootPanel.add(new RegisterStatusPanel(register));
         rootPanel.add(new CashierLoginPanel());
-		rootPanel.add(new ProductSelectionPanel(register));
-		rootPanel.add(new SaleDetailPanel());
+        productSelectionPanel = new ProductSelectionPanel(register);
+		rootPanel.add(productSelectionPanel);
+		saleDetailPanel = new SaleDetailPanel(this);
+		rootPanel.add(saleDetailPanel);
 		rootPanel.add(new CardSwipePanel());
 		rootPanel.add(new CashDrawerPanel());
         frame.getContentPane().add(rootPanel);
         frame.pack();
         frame.setVisible(true);
     }
+	
+	public void registerLineItemEventListener(LineItemEventListener listener) {
+		productSelectionPanel.addLineItemEventListener(listener);
+	}
 
 }

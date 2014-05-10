@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -35,6 +36,7 @@ public class ProductSelectionPanel extends JPanel {
 	private Border raisedBevel = BorderFactory.createRaisedBevelBorder();
 	private Border loweredBevel = BorderFactory.createLoweredBevelBorder();
 	private Border compoundBorder = BorderFactory.createCompoundBorder(raisedBevel, loweredBevel);
+	private List<LineItemEventListener> lineItemEventListeners;
 	private static final String SPACER = "  ";
 	private static final String EMPTY_STRING = "";
 
@@ -100,12 +102,12 @@ public class ProductSelectionPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (register.getCurrentProductSelection().trim().length() > 0 && 
 				    register.getCurrentQuantity() > 0) {
-			
-			System.out.println(
-					"ready to add line item: " + 
-			        register.getCurrentProductSelection() + 
-			        ", quantity: " + 
-			        register.getCurrentQuantity());
+
+			        fireLineItemEvent(new LineItemEvent(
+					    this, 
+					    LineItemEventType.ADD,
+					    register.getCurrentProductSelection().substring(0,5), 
+					    register.getCurrentQuantity()));
 
                     register.setCurrentProductSelection(EMPTY_STRING);
                     register.setCurrentQuantity(1);
@@ -118,5 +120,22 @@ public class ProductSelectionPanel extends JPanel {
         enterLineItem.setToolTipText(message("add.to.order"));
         entryPanel.add(enterLineItem);
         this.add(entryPanel);
+	}
+	
+	public void addLineItemEventListener(LineItemEventListener listener) {
+		lineItemEventListeners().add(listener);
+	}
+	
+	private void fireLineItemEvent(LineItemEvent event) {
+		for (LineItemEventListener listener : lineItemEventListeners()) {
+			listener.lineItemProcessed(event);
+		}
+	}
+	
+	private List<LineItemEventListener> lineItemEventListeners() {
+		if (lineItemEventListeners == null) {
+			lineItemEventListeners = new ArrayList<LineItemEventListener>();
+		}
+		return lineItemEventListeners;
 	}
 }

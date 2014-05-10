@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Point of Sale Project Cheatsheet</title>
+<style>
+.box {
+    border: 1px dashed black;
+    background-color: #eee;
+    padding: 4px;
+}
+.code {
+    font-family: Courier New, monospaced;
+    font-size: 95%;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+<h1>Point of Sale Project Cheatsheet</h1>
+
+<p>Load test data</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mongo test_data.js
+</pre>
+</p>
+
+<p>Load production data</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mongo prod_data.js
+</pre>
+</p>
+
+<p>Start credit authorization server</p>
+<p>
+<pre class="code box">
+authserver start
+</pre>
+</p>
+
+<p>Stop credit authorization server</p>
+<p>
+<pre class="code box">
+authserver stop
+</pre>
+</p>
+
+<p>Restart credit authorization server</p>
+<p>
+<pre class="code box">
+authserver restart
+</pre>
+</p>
+
+<p>Build and run unit tests</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mvn test
+</pre>
+</p>
+
+<p>Build and run integration tests</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mvn failsafe:integration-test
+</pre>
+</p>
+
+<p>Build and create POS Store executable jar</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mvn package -Pstore
+</pre>
+</p>
+
+<p>Build and create POS Register executable jar</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mvn package -Pregister
+</pre>
+</p>
+
+<p>Build and create POS Store and Register executable jars</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+mvn package -Pstore,register
+</pre>
+</p>
+
+<p>Start the POS Store application (background)</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+java -jar target/pos-store.jar &
+</pre>
+</p>
+
+<p>Start the POS Register application (can run multiple instances)</p>
+<p>
+<pre class="code box">
+cd ~/workspace/point-of-sale
+java -jar target/pos-register.jar <i>register-number</i>
+</pre>
+</p>
+
+
+</body>
+</html>

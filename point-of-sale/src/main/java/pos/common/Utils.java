@@ -50,6 +50,7 @@ public class Utils {
 		    		LOGGER_NAME_KEY + " = PosManager";
 
 	private static final String LOCALE_KEY = "locale";
+	@SuppressWarnings("unused")
 	private static final String LOCALE_MESSAGE = "using locale ";
 
 	private static final String noFileMessage = "Unable to read pos.properties file.";

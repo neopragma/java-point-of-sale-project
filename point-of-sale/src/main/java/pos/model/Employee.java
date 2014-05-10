@@ -3,7 +3,6 @@ package pos.model;
 import static pos.common.Utils.databaseHost;
 import static pos.common.Utils.databaseName;
 
-import java.math.BigDecimal;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -18,37 +18,40 @@
 <a name="stuff"/>
 <h2>What's in the box?</h2>
 <p>
-After cloning the repository into <span class="code">$HOME/workspace</span>, you have a directory structure like this:
+After cloning the repository into <span class="code">$HOME/workspace</span> and running the <span class="code">setup</span>, you have a directory structure like this:
 </p>
 <p>
 <pre class="code box">
-$HOME/workspace/
-    |
-    +---- point-of-sale/
+$HOME
+  |
+  +-- bin/
+  |     |
+  |     +-- authserver (start/stop the credit authorization server)
+  |     |
+  |     +-- store (start/stop the Point of Sale Store application) 
+  |     |
+  |     +-- register (start a Point of Sale Register instance)
+  |
+  +-- Desktop/
+  |     |
+  |     +-- Point-of-Sale-Docs
+  |
+  +-- workspace
+        |
+        +-- point-of-sale/
               |
-              +---- install
+              +-- install
               |
-              +---- pom.xml
+              +-- pom.xml
               |
-              +---- (typical Eclipse/Maven directory structure)
+              +-- (typical Eclipse/Maven directory structure)
               |
-              +---- credit-authorization/
-                        |
-                        +---- app/
-                            |
-                            +---- authserver.rb
+              +-- credit-authorization/
+                    |
+                    +-- app/
+                         |
+                         +---- authserver.rb
 </pre>
-</p>
-<p>
-The <span class="code">install</span> script installs a few programs needed by the point of sale application, copies scripts into your <span class="code">$HOME/bin</span> directory, and adds <span class="code">$HOME/bin</span> to the <span class="code">PATH</span>.
-</p>
-<p>
-The <span class="code">credit-authorization</span> directory contains a Ruby application that simulates an external credit authorization service the point of sale application uses to authorize credit and debit card sales. You don't need to modify this application, but you do need to start it and leave it running while you work on the point of sale code. The <span class="code">install</span> script places a script named <span class="code">authserver</span> in your <span class="code">$HOME/bin</span> directory, which you can use to start and stop the credit authorization server. Run <span class="code">authserver start</span>, <span class="code">authserver stop</span>, and <span class="code">authserver restart</span> as needed.
-<p>
-Eclipse is configured with the <span class="code">m2e</span> plugin for Maven support. You can run Maven goals from inside Eclipse by right-clicking on the <span class="code">pom.xml</span> file and selecting a Maven run configuration from the context menu, or from the command line using the <span class="code">mvn</span> command.
-</p>
-<p>
-The point of sale application uses a <span class="code">MongoDB</span> database. Scripts to start and stop the <span class="code">mongod</span> daemon and to initialize and reset the test data are provided in the <span class="code">point-of-sale</span> directory.
 </p>
 <p>
 The project is already set up as a <span class="code">git</span> project with the root at <span class="code">point-of-sale</span>. Eclipse is already configured with <span class="code">git</span> support, so you can issue version control commands from within Eclipse or from the command line, as you prefer.
@@ -67,7 +70,10 @@ The descriptions of the new functionality you will add to the application are pr
 If this were a &quot;real&quot; software development project, there would be some degree of up-front analysis and design. With traditional development processes, a comprehensive design would be prepared before beginning coding. With adaptive processes, enough design would be completed ahead of time to give people confidence they were taking the solution in the right direction, and they had a good general idea of the architecture. We take the latter approach here.
 </p>
 <p>
-Here is a context diagram that shows the application you will be working on. It is the store point of sale system in the center of the diagram. We've provided fake point of sale terminal interfaces, a fake credit authorization system, and a fake purchasing application. Your code will interact with those components, but you will not modify them. 
+Here is a context diagram that shows the application you will be working on. You will modify some or all of the blue components as you play User Stories during the course. The credit authorization server is provided so that you will have to deal with an external dependency; you need not modify it. 
+</p>
+<p>
+The Store application is a multithreaded server. The Register application simulates the point of sale terminals and peripheral devices. The database is MongoDB.
 </p>
 <p>
 <img src="images/point-of-sale-context-diagram.png" width="500px"/>

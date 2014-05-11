@@ -43,7 +43,7 @@ public class Product extends BasicDBObject{
 		this.id = id;
 		this.sku = sku;
 		this.description = description;
-		this.unitPrice = unitPrice;
+		setUnitPrice(unitPrice);
 		this.taxable = taxable;
 	}
 	
@@ -86,6 +86,7 @@ public class Product extends BasicDBObject{
 	
 	public void setUnitPrice(BigDecimal unitPrice) {
 		this.unitPrice = unitPrice;
+		this.unitPrice.setScale(2, BigDecimal.ROUND_HALF_UP);
 	}
 	
 	public Boolean isTaxable() {
@@ -114,7 +115,7 @@ public class Product extends BasicDBObject{
 				(ObjectId) dbObject.get(ID),
 				(String) dbObject.get(SKU),
 				(String) dbObject.get(DESCRIPTION),
-				new BigDecimal((String) dbObject.get(UNIT_PRICE)),
+				new BigDecimal((Double) dbObject.get(UNIT_PRICE)),
 				new Boolean((Boolean) dbObject.get(TAXABLE)));
 			products.add(product);
 		}

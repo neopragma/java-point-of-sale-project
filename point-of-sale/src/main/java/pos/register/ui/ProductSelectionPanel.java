@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.IOException;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +52,12 @@ public class ProductSelectionPanel extends JPanel {
 		List<Product> products = Product.findAll();
 
 		final JComboBox<String> productList = new JComboBox<String>();
-		productList.setToolTipText(message("select.product"));
+		productList.setToolTipText(message("select.product")); 
+		MathContext mathContext = new MathContext(2, RoundingMode.HALF_UP);
 		for (Product product : products) {
 			productList.addItem(
                 product.getSku() + SPACER + 
-                product.getUnitPrice() + SPACER +
+                product.getUnitPrice().round(mathContext) + SPACER +
                 product.getDescription());
 		}
 		productList.addActionListener(new ActionListener() {

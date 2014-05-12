@@ -14,10 +14,11 @@ export PROJECT_DIR="$HOME/workspace/point-of-sale"
 
 echo
 echo '============================================================='
-echo "Copying project files to $HOME/workspace/point-of-sale..."
+echo "Cloning project files into $HOME/workspace/point-of-sale..."
 
 mkdir -p "$HOME/workspace"
-cp -R point-of-sale "$HOME/workspace"
+cd "$HOME/workspace"
+git clone https://github.com/neopragma-training
 
 echo
 echo '============================================================='

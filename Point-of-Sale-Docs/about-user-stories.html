@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>About User Stories</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/default.css"/>
+</head>
+<body>
+<a href="index.html">Top</a>
+<h1>About User Stories</h1>
+
+<p>
+A <a href="http://www.mountaingoatsoftware.com/agile/user-stories">User Story</a> is a <a href="http://en.wikipedia.org/wiki/Lightweight_methodology">lightweight</a> <a href="http://www.scrumalliance.org/community/articles/2010/april/new-to-user-stories">requirements artifact</a> that works well when using a <a href="http://en.wikipedia.org/wiki/Collaboration">collaborative</a> approach to application software development. It describes an interaction between an <a href="http://www.uml-diagrams.org/use-case-actor.html">actor</a> and a software system.  The general guidelines are:
+</p>
+<p>
+<ol>
+<p>
+<li>A User Story is brief and <a href="http://xprogramming.com/articles/expcardconversationconfirmation">not too detailed</a>. It serves as a placeholder for a conversation. When working in a collaborative style, the assumption is that interested parties will interact directly with one another to achieve the project goals. User Stories represent work to be done, and they exist only until the work they represent has been done; they are <em>transient artifacts</em>, and not a permanent record of system requirements or development history. Details about the requirements may be stored in a long-lived system of record, separate from the User Stories. When we do the work represented by a User Story, we say we are &quot;playing&quot; the story.</li>
+</p>
+<p>
+<li>A User Story captures four key pieces of information:
+<ul>
+<li>What is the desired functionality?</li>
+<li>Who needs the desired functionality?</li>
+<li>What is the value to be obtained through the desired functionality?</li>
+<li>How will we know when the desired functionality has been completed?</li>
+</ul>
+</li>
+</p>
+</ol>
+</p>
+<h3>Format</h3>
+<p>
+There is no single &quot;correct&quot; format for a User Story. People who are new to User Stories often use the following template to help them get started. Over time, they may adjust the format according to their own needs.
+</p>
+<p>
+<pre class="code box">
+As a [persona or user type]                         <= Who needs the desired functionality?
+I want [something to happen]                        <= What is the desired functionality?
+So that [I will receive such-and-such value]        <= What is the value to be obtained?
+
+Acceptance Criteria:                                <= How will we know when we are done?
+
+1. Demonstrate that [something happens] by showing the working software in action
+2. Demonstrate that [whatever else is relevant to completing the User Story] has happened
+</pre>
+</p>
+<p>
+This might look like:
+</p>
+<p>
+<pre class="code box">
+As a Cashier,
+I want the Register to calculate the total sale amount
+So that I can charge the Customer the correct amount
+
+Acceptance Criteria:
+
+GIVEN the customer buys 2 bags of potato chips 
+AND 1 soft drink
+WHEN I complete the sale
+THEN the total price is $4.79
+</pre>
+</p>
+<p>
+Details such as the unit price of the items, whether they are taxable, and the tax rate to apply are not spelled out in the User Story. They are documented elsewhere and/or they emerge through collaboration among project stakeholders. In addition, the User Story focuses on the actions taken and the visible outcomes of those actions, and not on implementation details like &quot;swipe a credit card&quot; or &quot;click a button.&quot; Notice the sample story does not specify how the customer &quot;buys&quot; an item or how the cashier &quot;completes the sale.&quot;
+</p>
+<h3>INVEST Principles</h3>
+<p>
+We usually start a development project with a roadmap or plan that lays out the order in which features will be delivered. However, reality often intrudes on this plan and causes us to change it. User Stories might be shifted around for a variety of reasons &mdash; changes in business priorities, changes in regulatory requirements, technical prerequisites discovered after the project starts, resource availability (or lack thereof), dependencies on external suppliers, or changes to the design due to lessons learned along the way. 
+</p>
+<p>
+To make it as easy as possible to shift stories around, we try to keep them small and minimize the dependencies between them. Bill Wake coined the acronym INVEST to help us remember key <a href="http://guide.agilealliance.org/guide/invest.html">principles</a> for good User Stories.
+</p>
+<p>
+<ul>
+<p>
+<li><strong>I</strong>ndependent. A User Story does not depend on any other User Story. The stories can be played in any order.</li>
+</p>
+<p>
+<li><strong>N</strong>egotiable. Stakeholders and team members discuss the details of the User Story and reach agreement on how the functionality will be implemented, demonstrated, and delivered.</li>
+</p>
+<p>
+<li><strong>V</strong>aluable. A User Story represents functionality that has value to at least one stakeholder. It does not represent an activity that is disconnected from stakeholder value.</li>
+</p>
+<p>
+<li><strong>E</strong>stimatable. A User Story is not ready to be played if the team has insufficient information to be able to judge the level of effort.</li>
+</p>
+<p>
+<li><strong>S</strong>mall. Small is a relative term, and its meaning depends on the nature of the work you are doing and on the delivery time you have to meet. In general, it's best to break functionality down into the smallest <a href="http://simpleprogrammer.com/2011/11/21/understanding-the-vertical-slice/">vertical slices</a> that can be demonstrated to a business stakeholder.</li>
+</p>
+<p><strong>T</strong>estable. It's hard to prove the functionality works if there's no practical way to test it. A User Story that is ready to play includes acceptance criteria that are clear and that can be tested unambiguously.</li>
+</p>
+</ul>
+</p>
+
+
+<p>
+
+</p>
+
+</body>
+</html>

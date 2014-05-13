@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Point of Sale Project User Stories</title>
+<link rel="stylesheet" type="text/css" href="stylesheets/default.css"/>
+</head>
+<body>
+<a href="index.html">Top</a>
+<h1>Point of Sale Project User Stories</h1>
+
+<p>
+This document summarizes the <a href="about-user-stories.html">User Stories</a> for the class project. 
+</p>
+<p>
+Take a look at the <a href="overview.html#storymap">Story Map</a> in the <a href="overview.html">project info</a> document. In <a href="http://www.agileproductdesign.com/blog/the_new_backlog.html">Story Mapping</a> terms, the <em>activities</em> across the top of the Story Map represent the broad functional areas of the application. The <em>tasks</em> translate into lightweight requirements artifacts such as &quot;Epics&quot; and &quot;User Stories.&quot; 
+</p>
+<p>
+The tasks are organized on the Story Map from high to low importance for customer-defined value. Within each activity, the priority is indicated by the top-to-bottom order of the cards. By cutting horizontally across the top row of tasks, we can carve out the pieces of functionality the customer deems most important. This gives us a starting point for our first release.
+</p>
+<p>
+The <a href="overview.html#walkingskeleton">Walking Skeleton</a> highlights the top row of activities from the Story Map. This may represent a <a href="http://practicetrumpstheory.com/minimum-viable-product/">minimum viable product</a> (MVP) from the customer's point of view. 
+</p>
+<p>
+Lightweight development methods usually describe the requirements for a system as a list of things to do. The list may be called a Master Story List, Product Backlog, Work Queue, or something else. In any case, it is a prioritized list of work items to be completed. Here is an initial Product Backlog for our Point of Sale development project, based on the Story Map. Our first release comprises the tasks in the Walking Skeleton.
+</p>
+<p>
+Notice that the tasks in the Story Map are high-level work items. We need to decompose them a bit to create User Stories that follow the INVEST principles. We'll use the term Epic to describe a high level task, and the term Story to describe a more fine-grained task.
+</p>
+
+<h2>Release 1</h2>
+
+<p>
+For the Transact Sales activity, at a minimum we need to be able to open a register, accept cash payment for goods, print receipts, and close the register. That is the most minimal functionality that will enable us to open for business.
+</p>
+<p>
+We also need some of the functionality in the supporting activities. Under Manage Stock, we need to be able to add products to inventory. We can worry about other tasks in this area later. Under Manage Employees, we need to be able to tell the system about employees so that they can perform secure functions. Under Support Customers, we need to be able to handle returns, or we risk alienating customers; and word of mouth will spread quickly. Under Accounting, we must report and pay taxes or we will be out of business quite soon.
+</p>
+
+<h3>Epic 1: Open Register</h3>
+<p>
+A Cashier is authorized to open and close Registers. The Cashier signs into the Register application using the Employee Id. The Cashier counts the cash in the cash drawer and enters the amount. The Register connects to the Store system and compares the amount entered by the Cashier with the amount recorded from the last time the Register was closed. If the amounts match, the Register is open for business. If the amounts don't match, human intervention is required to reconcile the amounts. Once that is done, the Manager enters his/her Employee Id to indicate the Register can be opened for business.
+</p>
+<h3>Story 1.1: Open Register - Happy Path</h3>
+<p>
+<pre class="code box">
+As a Cashier,
+I want to open my Register
+So that I can sell products to customers
+
+Acceptance Criteria:
+
+GIVEN I am an authorized Cashier
+AND the Store system is running 
+AND the cash count matches the previous count
+AND I am not already signed into another Register
+AND this Register is not already open
+WHEN I open the Register
+THEN the Register is ready to transact business 
+</pre>
+</p>
+<h3>Story 1.2: Open Register - No Connection to Store System</h3>
+<p>
+<pre class="code box">
+As a Cashier,
+I want the Register to tell me when it can't connect to the Store system
+So that I can take appropriate action
+
+Acceptance Criteria:
+
+GIVEN the Store system is not running 
+WHEN I open the Register
+THEN the Register tells me it can't connect to the Store system 
+</pre>
+</p>
+<h3>Story 1.3: Open Register - Cash Drawer Not Reconciled</h3>
+<p>
+<pre class="code box">
+As a Cashier,
+I want my Cash Drawer to be reconciled when I start work
+So that I can account for the cash for which I am responsible
+
+Acceptance Criteria:
+
+GIVEN I am an authorized Cashier
+AND the Store system is running 
+AND the cash count does not match the previous count
+WHEN I open the Register
+THEN the Register goes into unreconciled status 
+</pre>
+</p>
+<h3>Story 1.4: Open Register - Employee Not Authorized</h3>
+<p>
+<pre class="code box">
+As the Manager,
+I want only Cashiers to be able to open a Register
+So that other people will not be able to take cash from the Dash Drawers
+
+Acceptance Criteria:
+
+GIVEN I am not an authorized Cashier
+WHEN I open the Register
+THEN the Register denies me access 
+</pre>
+</p>
+<h3>Story 1.5: Open Register - Employee Already Signed In</h3>
+<p>
+<pre class="code box">
+As the Manager,
+I want a Cashiers to be able to sign into only one Register at a time
+To minimize the chance of fraudulent activity
+
+Acceptance Criteria:
+
+GIVEN I am an authorized Cashier
+AND I am signed into Register 2
+WHEN I open Register 5
+THEN the Register informs me I am signed into Register 2
+AND the Register does not open for business
+</pre>
+<h3>Story 1.6: Open Register - Register Already Open</h3>
+<p>
+<pre class="code box">
+As the Manager,
+I don't want multiple copies of a Register open at the same time
+So that I can properly account for transaction activity
+
+Acceptance Criteria:
+
+GIVEN I am an authorized Cashier
+AND Register 3 is already open
+WHEN I open Register 3
+THEN the Register informs me it is already in use
+AND the Register does not open for business
+</pre>
+</p>
+<h3>Story x.x: blah</h3>
+<p>
+<pre class="code box">
+</pre>
+</p>
+<p>
+</p>
+
+</body>
+</html>

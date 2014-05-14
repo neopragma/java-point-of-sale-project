@@ -109,6 +109,25 @@ The walking skeleton represents a minimal set of features that is usable and val
 <p>
 A closely-related idea is the notion of a <a href="http://en.wikipedia.org/wiki/Minimum_viable_product">Minimum Viable Product</a> (MVP). This is a minimal implementation that can be put into production to gauge the response of users. Based on feedback from users, we can tweak the design to meet their needs better. The idea comes from the <a href="http://theleanstartup.com/principles">Lean Startup</a> concept, in which an initial solution is put into the market quickly in order to get feedback from real customers to guide further development of the product.
 </p>
+<h2>Deciding What to Build First</h2>
+<p>
+<a href="http://en.wikipedia.org/wiki/Adaptive_Software_Development">Adaptive software development</a> calls for frequent feedback from real users or responsible decision-makers to help us keep the design aligned with customer needs. The Story Map helps us understand which features or subsets of features are most critical to get into the market early, but it leaves us with relatively large pieces of functionality to build. We could continue to decompose the tasks until we reached a fine-grained level, but the effort to do so can pass the point of diminishing returns as we delve into details for features that may never be implemented or that will not come up until later in the project, and are subject to change between now and then.
+</p>
+<p>
+An additional planning technique, <a href="http://leanandkanban.wordpress.com/2009/04/16/dimensional-planning/">Dimensional Planning</a>, can help us break down the features in another way. To the three canonical planning dimensions &mdash; <em>scope</em>, <em>schedule</em>, and <em>budget</em> &mdash; Dimensional Planning adds a fourth &mdash; <em>depth</em>. Depth refers to the degree to which an implementation is fully fleshed-out or polished. 
+</p>
+<p>
+To illustrate this technique, let's consider the first two tasks in the Walking Skeleton &mdash; Open Register and Close Register. Both these things are necessary to enable us to conduct business using the POS system. The question is, to what extent do these functions have to be implemented before we can <em>begin</em> to do business? More practically, what is the minimum implementation that will enable us to demonstrate the functionality to decision-makers (possibly in a test or sandbox environment) so that they can reason about the direction product development is heading?
+</p>
+<p>
+When we look at the list of <a href="user-stories.html">User Stories</a> for the Point of Sale project, we see that &quot;Open Register&quot; is defined as an <em>Epic</em> (that is, a &quot;big User Story&quot;), and several smaller User Stories are defined beneath it. The first of these, &quot;Story 1.1: Open Register &mdash; Happy Path&quot; describes the interaction between a Cashier and a Register in the case when all external systems are up and accessible, when the Cash Drawer is balanced, and when there are no other problems in the system. This is sufficient to demonstrate the basic functionality of Open Register.
+</p>
+<p>
+Similarly, &quot;Close Register&quot; is defined as an Epic with several User Stories beneath it. Most of the User Stories deal with various error conditions. At a minimum, we only need to implement &quot;Story 2.1: Close Register &mdash; Happy Path&quot; in order to demonstrate the Close Register functionality. 
+</p>
+<p>
+We can work our way across the Walking Skeleton and look for ways to deliver a simple implementation of each item as quickly as possible, so that we can obtain feedback early, while the cost of change is low. For example, Add to Inventory and Maintain Employee Information could be supported by having an employee load the data using database utilities, without writing an application to do it. The requirement to report and pay taxes could be supported by purchasing a third-party package or subscribing to an online service to handle the task. 
+</p>
 <h2>User Types and Personas</h2>
 <p>
 <a href="http://www.mountaingoatsoftware.com/agile/user-stories">User Stories</a> generally represent the interaction between a person and an application. They describe an interaction from the point of view of the user.
@@ -134,7 +153,7 @@ Other User Stories describe interactions that differ by individual, even if the 
 To distinguish individual differences like these, we use <a href="http://www.agilemodeling.com/artifacts/personas.htm">Personas</a>. A persona is a made-up person who has a backstory, a reason to patronize the store, and preferences about how they want to shop and pay for purchases. Personas help us fine-tune our design to ensure a positive <a href="http://www.allaboutux.org/ux-definitions">user experience</a> for the people who will depend on our software.
 </p>
 <p>
-To help make the User Stories meaningful, we have defined several User Types and Personas for the Point of Sale application. The details are documented separately, but here is an overview:
+To help make the User Stories meaningful, we have defined several User Types and Personas for the Point of Sale application. The details are <a href="personas.html">documented separately</a>, but here is an overview:
 </p>
 <p>
 <img src="images/point-of-sale-user-types-and-personas.png" width="1000px"/>

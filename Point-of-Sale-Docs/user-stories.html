@@ -133,6 +133,175 @@ THEN the Register informs me it is already in use
 AND the Register does not open for business
 </pre>
 </p>
+<p>
+Additional notes:
+</p>
+<p>
+This is a bit of a &quot;technical story&quot; in that it's unlikely a person would imagine 
+the POS system could possibly think there were two of the same physical Register in the universe. 
+However, the Store software can be made to connect with two clients that both identify themselves 
+as the same Register, unless we explicitly prevent it. The Cashier is the actor who obtains value 
+from this story, as he/she is responsible for the cash in the Register and the credit and debit 
+card transactions handled through the Register.
+</p>
+<h3>Story 1.7: Open Register When In Closed-Pending State and In Balance</h3>
+<p>
+Not for Release 1. When a Register closes in closed-pending state, it means the Register was unable to report its closing Cash Drawer amount to the Store system at the time it was closed. The Open Register operation has to complete the process of comparing entered and calculated ending Cash Drawer amounts.
+</p>
+<p>
+<pre class="code box">
+As a Cashier,
+When I open a Register that was closed in Closed-Pending state,
+I want the system to balance the Cash Drawer amounts
+So that I will have a clean start for my shift.
+
+Acceptance Criteria:
+
+GIVEN I am an authorized Cashier
+AND the register was closed in Close-Pending state
+AND the entered Cash Drawer amount equals the calculated Cash Drawer amount
+THEN Register 4 reports its closing Cash Drawer amount
+AND Register 4 opens for business
+</pre>
+</p>
+<h3>Story 1.8: Open Register When In Closed-Pending State and Out of Balance</h3>
+<p>
+Not for Release 1.
+</p>
+<p>
+<pre class="code box">
+As a Cashier,
+When I open a Register that was closed in Closed-Pending state
+and the Cash Drawer counts are different,
+I want the system to balance the Cash Drawer amounts
+So that I will have a clean start for my shift.
+
+Acceptance Criteria:
+
+GIVEN I am an authorized Cashier
+AND the register was closed in Close-Pending state
+AND the calculated Cash Drawer amount is $3,450.00
+AND the Cashier enters the amount $3,400.00
+THEN Register 4 goes into unreconciled state
+AND Register 4 informs the Cashier that Manager action is required
+</pre>
+</p>
+<h3>Story 1.9: Open Register After Manager Signs Off on Cash Drawer Balance</h3>
+<p>
+Not for Release 1.
+</p>
+<p>
+<pre class="code box">
+As a Manager,
+I want to verify each Register was closed with the correct amount in the Cash Drawer
+before allowing the Register to open for a new shift
+So that I can prevent theft and account for funds properly
+
+Acceptance Criteria:
+
+GIVEN Register 5 is opened in closed-pending state
+AND the entered and calculated Cash Drawer amounts are different
+AND Manager has verified the correct Cash Drawer amount
+WHEN Manager approves the Register as in balance
+THEN the system stores the closing Cash Drawer amount
+AND Register 5 opens for business
+</pre>
+</p>
+<h3>Epic 2: Close Register</h3>
+<p>
+When a Cashier closes the Register, the following things happen:
+</p>
+<p>
+<ol>
+<li>Cashier counts the money in the Cash Drawer and enters the amount into the system.</li>
+<li>System has calculated the expected Cash Drawer balance as transactions were carried out. It now compares the calculated amount with the entered amount.</li>
+<li>If the amounts are the same, the Register sends its status information to the Store system where it is saved.</li>
+<li>The Cashier is signed out and the Register is closed for business.</li>
+</ol>
+</p>
+<p>
+If the amounts are not the same, human intervention is required to reconcile the amounts. Once that has been done, the Manager enters a code to tell the system the amounts are in balance and the Register can be closed.
+</p>
+<h3>Story 2.1: Close Register - Happy Path</h3>
+<p>
+<pre class="code box">
+As a Cashier,
+I want to close my Register
+So that I can end my shift
+
+Acceptance Criteria:
+
+GIVEN Cashier is signed into Register 4
+WHEN Cashier closes Register 4
+THEN Register 4 reports its closing Cash Drawer amount
+AND Register 4 closes for business
+</pre>
+</p>
+<h3>Story 2.2: Close Register - Cash Drawer Unreconciled</h3>
+<p>
+<pre class="code box">
+As a Cashier,
+I want help balancing my Cash Drawer
+So that I can close my Register
+and end my shift
+
+Acceptance Criteria:
+
+GIVEN Cashier attempts to close Register 3
+AND the calculated Cash Drawer amount is $3,450.00
+AND the Cashier enters the amount $3,400.00
+THEN Register 4 goes into unreconciled state
+AND Register 4 informs the Cashier that Manager action is required
+</pre>
+</p>
+<h3>Story 2.3: Close Register - Cash Drawer Reconciled</h3>
+<p>
+<pre class="code box">
+As a Manager,
+I want to verify each Register closes with the correct amount in the Cash Drawer
+So that I can prevent theft and account for funds properly
+
+Acceptance Criteria:
+
+GIVEN Register 5 is in unreconciled state
+AND Manager has verified the correct Cash Drawer amount
+WHEN Manager approves the Register to close
+THEN Register 5 reports its closing Cash Drawer amount
+AND Register 5 closes for business
+</pre>
+</p>
+<h3>Story 2.4: Close Register - Lost Connection to Store System</h3>
+<p>
+This story is not included in Release 1. This is a &quot;technical story&quot; in that a business person is unlikely to think of the scenario when the connection to the Store system is lost before or during the Register close operation.
+</p>
+<p>
+<pre class="code box">
+Given I am a Cashier,
+I want the Register to handle lost connections gracefully when closing
+So that I can end my shift
+
+Acceptance Criteria:
+
+GIVEN Cashier is signed into Register 2
+AND Register 2 has no connection to the Store system
+THEN Register 2 goes into a closed-pending state
+AND Register 2 closes for business
+</pre>
+</p>
+<h3>Epic 3: Accept Cash Payment</h3>
+<p>
+A Register has to be able to support cash payments for purchases. The Cashier opens the Cash Drawer, accepts the cash from the Customer, and counts out change from the Cash Drawer. The Register system deducts the sale amount from the running Cash Drawer balance. 
+</p>
+<h3>Story x.x: blah</h3>
+<p>
+<pre class="code box">
+</pre>
+</p>
+<h3>Story x.x: blah</h3>
+<p>
+<pre class="code box">
+</pre>
+</p>
 <h3>Story x.x: blah</h3>
 <p>
 <pre class="code box">

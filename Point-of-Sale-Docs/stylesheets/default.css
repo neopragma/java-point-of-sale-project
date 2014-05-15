@@ -1,3 +1,6 @@
+body {
+	font-family: Verdana,Arial,sans-serif;
+}
 .box {
     border: 1px dashed black;
     background-color: #eee;
